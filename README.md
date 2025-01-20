@@ -140,6 +140,6 @@ This project is licensed under the MIT License.
 
 **Email:** hasan.kalantari29@gmail.com
 
-**GitHub:** Your GitHub Profile
+**GitHub:** https://github.com/HeisenbergHK
 
-**LinkedIn:** Your LinkedIn Profile
+**LinkedIn:** https://linkedin.com/in/hassan-kalantari-a86ba5173
