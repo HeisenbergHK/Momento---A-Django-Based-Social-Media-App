@@ -1,0 +1,156 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+	<title>Profile - {{user_object.username}}</title>
+   <!-- <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> -->
+    
+    <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+</head>
+<body>
+<!--<div class="se-pre-con"></div>-->
+<div class="theme-layout">
+	
+	</div>
+	
+	<section>
+		<div class="feature-photo">
+			<figure><img src="{% static 'images/resources/timeline-1.jpg' %}" alt=""></figure>
+			<form action="\follow", method="POST">
+				{% csrf_token %}
+				<div class="add-btn">
+					<span style="color: white; font-size: 27px; margin-right: 420px; font-family: 'Arial', sans-serif;">
+						<b><a href="/">Home</a></b>
+					</span>
+					{% if number_of_posts == 0 %}
+					<span style="color: white; font-size: 27px; font-family: 'Arial', sans-serif;"><b>No post yet!</b></span>
+					{% elif number_of_posts == 1 %}
+					<span style="color: white; font-size: 27px; font-family: 'Arial', sans-serif;"><b>{{number_of_posts}} Post</b></span>
+					{% else %}
+					<span style="color: white; font-size: 27px; font-family: 'Arial', sans-serif;"><b>{{number_of_posts}} Posts</b></span>
+					{% endif %}
+
+					{% if number_of_user_followers == 0 %}
+					<span style="color: white; font-size: 27px; font-family: 'Arial', sans-serif;"><b>No Followers!</b></span>
+					{% elif number_of_user_followers == 1%}
+					<span style="color: white; font-size: 27px; font-family: 'Arial', sans-serif;"><b>{{number_of_user_followers}} Follower</b></span>
+					{% else %}
+					<span style="color: white; font-size: 27px; font-family: 'Arial', sans-serif;"><b>{{number_of_user_followers}} Followers</b></span>
+					{% endif %}
+
+					{% if number_of_user_following == 0 %}
+					<span style="color: white; font-size: 27px; font-family: 'Arial', sans-serif;"><b>No Following!</b></span>
+					{% elif number_of_user_following == 1 %}	
+					<span style="color: white; font-size: 27px; font-family: 'Arial', sans-serif;"><b>{{number_of_user_following}} Following</b></span>
+					{% else %}
+					<span style="color: white; font-size: 27px; font-family: 'Arial', sans-serif;"><b>{{number_of_user_following}} Followings</b></span>
+					{% endif %}
+
+					<input type="hidden" value="{{user.username}}" name="follower">
+					<input type="hidden" value="{{profile_object.user.username}}" name="user">
+					{% if user.username == profile_object.user.username %}
+					<a href="/setting/" title="" data-ripple=""><button type="button" style="font-family: 'Arial', sans-serif; background-color: #ffc0cb; border: #ffc0cb;">Settings</button></a>
+					{% else %}
+					<a href="" title="" data-ripple=""><button type="submit" style="font-family: 'Arial', sans-serif; background-color: #ffc0cb; border: #ffc0cb;">{{button_text}}</button></a>
+					{% endif %}
+				</div>
+			</form>
+	
+			<div class="container-fluid">
+				<div class="row merged">
+					<div class="col-lg-2 col-sm-3">
+						<div class="user-avatar" style="position: relative;">
+							<figure>
+								<img src="{{profile_object.profile_image.url}}" style="height: 250px; width: 100%;" alt="">
+							</figure>
+							<h5 style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); color: white; font-size: 20px; font-weight: bold; background: rgba(0, 0, 0, 0.5); padding: 5px 10px; border-radius: 5px;">
+								@{{user_object.username}}
+							</h5>
+						</div>
+					</div>
+					<!-- <div class="col-lg-10 col-sm-9">
+						<div class="timeline-info">
+							<ul>
+								<li class="admin-name">
+									<h5 style="color: black; white-space: nowrap; width: 110px; font-size: 27px;"><b>@{{user.username}}</b></h5>
+								</li>
+							</ul>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	
+		<!-- Bio Section Below the Profile Image -->
+		<section>
+			<div class="bio">
+				<p style="font-size: 20px; font-family: 'Arial', sans-serif; color: black; margin: 0;">
+					{{profile_object.bio}}
+				</p>
+			</div>
+		</section>
+	</section>
+	
+	<!-- top area -->	
+	<section>
+		<div class="gap gray-bg">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row" id="page-contents">
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+									
+									
+									
+								</aside>
+							</div><!-- sidebar -->
+
+							<div class="col-lg-6">
+								<div class="central-meta">
+									<ul class="photos">
+
+										{% for post in posts %}	
+										<li>
+											<a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+												<img src="{{post.image.url}}" style="height: 250px; width: 500px;" alt=""></a>
+										</li>
+										{% endfor %}
+										
+										
+									</ul>
+									<!-- <div class="lodmore"><button class="btn-view btn-load-more"></button></div> -->
+								</div><!-- photos -->
+							</div><!-- centerl meta -->
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+									
+								</aside>
+							</div><!-- sidebar -->
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+
+	
+	
+	<script data-cfasync="false" src="{% static '../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script src="{% static 'js/main.min.js' %}"></script>
+	<script src="{% static 'js/script.js' %}"></script>
+
+</body>	
+
+
+</html>
