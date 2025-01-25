@@ -9,6 +9,8 @@ from django.shortcuts import redirect, render
 
 from .models import FollowerCount, LikePost, Post, Profile
 
+from auto_caption.utils import create_caption
+
 
 @login_required(login_url="signin")
 def index(request):
@@ -34,7 +36,7 @@ def index(request):
     # The * in chain(*feed) is the unpacking operator in Python.
     # Its purpose is to unpack the elements of an iterable (such as a list or tuple)
     # so that each element is passed as a separate argument to the function.
-    feed_list = list(chain(*feed))
+    feed_list = sorted(chain(*feed), key=lambda post: post.created_at, reverse=True)
 
     for post in feed_list:
         post_user = User.objects.get(username=post.user)
@@ -202,7 +204,12 @@ def upload(request):
     if request.method == "POST":
         user = request.user.username
         image = request.FILES["image_upload"]
-        caption = request.POST["caption"]
+        auto_caption = request.POST.get("auto_caption")
+
+        if auto_caption:  # Generate a caption if the checkbox is checked
+            caption = create_caption(image).capitalize()
+        else:
+            caption = request.POST["caption"]
 
         new_post = Post.objects.create(user=user, image=image, caption=caption)
         new_post.save()
@@ -211,7 +218,6 @@ def upload(request):
 
     else:
         return redirect("/")
-
 
 # @login_required(login_url="signin")
 # def like_post(request):

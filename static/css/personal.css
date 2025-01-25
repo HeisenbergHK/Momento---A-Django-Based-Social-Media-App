@@ -1,0 +1,18 @@
+/* Ensure the block changes color when the checkbox is checked */
+input:checked + .block {
+    background-color: #3b82f6; /* Blue when active */
+}
+
+/* Move the dot to the right when the checkbox is checked */
+input:checked + .block + .dot {
+    transform: translateX(2rem); /* Adjust based on your width */
+}
+
+/* Add transitions for a smooth animation */
+.block {
+    transition: background-color 0.3s ease;
+}
+
+.dot {
+    transition: transform 0.3s ease;
+}

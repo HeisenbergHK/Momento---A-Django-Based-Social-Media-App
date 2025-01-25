@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
+    <link rel="stylesheet" href="{% static 'css/personal.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -67,54 +68,41 @@
                 </a>
                 <!-- upload dropdown box -->
                 <div uk-dropdown="pos: top-right;mode:click ; animation: uk-animation-slide-bottom-small" class="header_dropdown">
-    
-                    <!-- notivication header -->
                     <div class="px-4 py-3 -mx-5 -mt-4 mb-5 border-b">
                         <h4>Upload Pics</h4>
                     </div>
-    
-                    <!-- notification contents -->
+                
                     <div class="flex justify-center flex-center text-center">
-    
                         <div class="flex flex-col choose-upload text-center">
-    
                             <form action="upload/" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div>
                                     <input type="file" id="file_upload" name="image_upload" hidden>
                                     <a href="#" class="button soft-warning small" onclick="document.getElementById('file_upload').click();"> Choose file</a>
                                 </div>
-    
+                
                                 <br>
-    
+                
                                 <div>
                                     <textarea name="caption" placeholder="Caption..." id=""></textarea>
                                 </div>
-    
-                                <button class="button bg-blue-700" type="submit"> Post</button>
-                            </form>
-    
-                        </div>
-    
-                        <div class="uk-flex uk-flex-column choose-upload" hidden>
-                            <div class="mx-auto flex flex-col h-24 items-center justify-center relative w-full rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
-                                    <path fill-rule="evenodd" d="M2 9.5A3.5 3.5 0 005.5 13H9v2.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 15.586V13h2.5a4.5 4.5 0 10-.616-8.958 4.002 4.002 0 10-7.753 1.977A3.5 3.5 0 002 9.5zm9 3.5H9V8a1 1 0 012 0v5z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <p class="my-3 leading-6"> Import videos from YouTube <br> Copy / Paste your video link here </p>
-                            <form class="uk-grid-small" uk-grid>
-                                <div class="uk-width-expand">
-                                    <input type="text" class="uk-input uk-form-small  bg-gray-200 " style="box-shadow:none" placeholder="Paste link">
+                
+                                <div class="flex items-center mt-3">
+                                    <label for="auto_caption" class="flex items-center cursor-pointer">
+                                        <!-- Toggle -->
+                                        <div class="relative">
+                                            <input type="checkbox" id="auto_caption" name="auto_caption" class="sr-only">
+                                            <div class="block bg-gray-300 w-14 h-8 rounded-full"></div>
+                                            <div class="dot absolute left-2 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                        </div>
+                                        <!-- Label -->
+                                        <span class="ml-3 text-gray-700">Auto Caption</span>
+                                    </label>
                                 </div>
-                                <div class="uk-width-auto"> <button type="submit" class="button soft-warning -ml-2">
-                                        Import </button> </div>
+                
+                                <button class="button bg-blue-700 mt-4" type="submit"> Post</button>
                             </form>
-                            <a href="#" class="uk-text-muted mt-3 uk-link"
-                                uk-toggle="target: .choose-upload ; animation: uk-animation-slide-left-small, uk-animation-slide-right-medium; queued: true">
-                                Or Upload Video </a>
                         </div>
-    
                     </div>
                 </div>
                 
@@ -145,7 +133,7 @@
                     <div class="space-y-5 flex-shrink-0 lg:w-7/12">
 
                         <!-- post 1-->
-                         {% for post_profile in posts_profiles reversed %}
+                         {% for post_profile in posts_profiles %}
                         <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
     
                             <!-- post header-->
@@ -299,7 +287,7 @@
 
                                 <p>
                                     <a href="">
-                                        {{post.caption}}
+                                        {{post_profile.post.caption}}
                                     </a>
                                 </p>
 
