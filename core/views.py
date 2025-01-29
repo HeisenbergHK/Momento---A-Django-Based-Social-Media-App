@@ -4,12 +4,12 @@ from itertools import chain
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 
-from .models import FollowerCount, LikePost, Post, Profile
-
 from auto_caption.utils import create_caption
+
+from .models import FollowerCount, LikePost, Post, Profile
 
 
 @login_required(login_url="signin")
@@ -218,6 +218,16 @@ def upload(request):
 
     else:
         return redirect("/")
+
+
+@login_required(login_url="signin")
+def delete(request, pk):
+    if request.method == "POST":
+        post = get_object_or_404(Post, id=pk)
+        post.delete()
+        return redirect("/")
+    return HttpResponseNotAllowed(["POST"])
+
 
 # @login_required(login_url="signin")
 # def like_post(request):
